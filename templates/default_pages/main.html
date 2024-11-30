@@ -3,9 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Timeline Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .timeline-container {
+            overflow-x: scroll;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .day-marker {
+            display: inline-block;
+            width: 80px;
+            text-align: center;
+            border-left: 1px solid #ddd;
+            padding: 10px 0;
+            position: relative;
+        }
+        .day-marker:first-child {
+            border-left: none;
+        }
+        .day-marker .date {
+            font-size: 14px;
+            color: #555;
+        }
+        .day-marker .weekday {
+            font-size: 12px;
+            color: #888;
+        }
+        .today-marker {
+            background: #ffdd57;
+            border-radius: 10px;
+            color: #333;
+        }
+        .month-label {
+            position: absolute;
+            top: -20px;
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, World!</h1>
+    <div class="timeline-container">
+        {% for item in timeline %}
+        <div class="day-marker {% if item.date.date == today.date %}today-marker{% endif %}">
+            <span class="month-label">
+                {% if forloop.first or item.day == 1 %}
+                    {{ item.month }}
+                {% endif %}
+            </span>
+            <div class="date">{{ item.day }}</div>
+            <div class="weekday">{{ item.weekday }}</div>
+        </div>
+        {% endfor %}
+    </div>
 </body>
 </html>
